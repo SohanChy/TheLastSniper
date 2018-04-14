@@ -16,6 +16,7 @@
 
 float skyTextureTiles = 1;
 float angle=0.0,deltaAngle = 0.0,ratio;
+float skySphere = 100.0;
 
 //BEGINING CAMERA
 float x=0.0f,y=2.75f,z=+25.0f;
@@ -36,7 +37,7 @@ void changeSize(int w1, int h1);
 
 //FOR LOADING TEXTURE
 GLUquadric *loaded_quad;
-GLuint grass,sky,zombie;
+GLuint grass,sky,zombie,sand;
 
 
 //ZOMBIE GLOBAL
@@ -51,34 +52,7 @@ int rightLegMove = -1; // If right mouse clicked, right leg will move by 1.
 int leftLegAngle = 90; // If right mouse clicked, this variable will be used to rotate left leg and it initialized to 90 degrees for first position of leg.
 int rightLegAngle = 90; // If right mouse clicked, this variable will be used to rotate right leg and it initialized to 90 degrees for first position of leg.
 float zMove = 0.0; // If right mouse clicked, this variable will be used to change position of object. Object will move on z-axis.
-float legSpeed = 1.5f;
-
-
-void zombieShow();
-
-#include "helpers.h"
-#include "draw.h"
-
-
-
-bool leftMouseButtonDown = false;
-bool rightMouseButtonDown = false;
-
-void mouseClickFunc(int button, int state, int x, int y)
-{
-    // Save the left button state
-    if (button == GLUT_LEFT_BUTTON)
-    {
-        leftMouseButtonDown = (state == GLUT_DOWN);
-    }
-
-    else if (button == GLUT_RIGHT_BUTTON)
-    {
-        // \/ right MouseButton
-        rightMouseButtonDown = (state == GLUT_DOWN);
-    }
-}
-
+float zombieMoveSpeed = 5.5f;
 
 float mouse_x = 0;
 float mouse_y = 0;
@@ -86,8 +60,67 @@ float mouse_y = 0;
 float xAngle = 0.0;
 float yAngle = 0.0;
 
-#include "keyboardmouse.h"
 
+bool leftMouseButtonDown = false;
+bool rightMouseButtonDown = false;
+
+class Zombie {
+   public:
+      double xLoc;   // Length of a box
+      int goLeftOrRight;
+      float startPosX;
+      bool alive;
+      Zombie(int p_goLeftOrRight, float p_startPosX){
+          goLeftOrRight = p_goLeftOrRight;
+          startPosX = p_startPosX;
+          alive = true;
+      }
+
+
+
+    //L TO R RANGE -23800->23800
+   // std::cout<<(startPosX+zMove) - 23800<<std::endl;
+
+
+      void checkIfAlive(){
+            int ww = glutGet(GLUT_WINDOW_WIDTH);
+            double mX = (mouse_x / ww);
+            double ownX = (double)((double)(startPosX+zMove) + 23800) / 47600;
+
+
+
+          if(leftMouseButtonDown){
+
+            if(goLeftOrRight == 0){
+                    //mX > .5
+                    mX = (1-mX) + 0.06;
+            }
+
+             std::cout<<"M: "<<mX<<std::endl;
+            std::cout<<"O: "<<ownX<<std::endl;
+
+            if( mX < ownX + 0.01 && mX > ownX - 0.01){
+                alive = false;
+            }
+          }
+      }
+
+      void drawZombie();
+};
+
+    //23800 is scope reach
+    Zombie zom_1(0,-23800);
+   // Zombie zom_2(1,-23800);
+
+
+
+
+#include "helpers.h"
+#include "draw.h"
+
+
+
+#include "keyboardmouse.h"
 
 void renderScene(void)
 {
@@ -95,6 +128,7 @@ void renderScene(void)
     int wh = glutGet(GLUT_WINDOW_HEIGHT);
     int ww = glutGet(GLUT_WINDOW_WIDTH);
 
+    //ZOOM SCOPE
     if(rightMouseButtonDown)
     {
         zoom = 10;
@@ -131,13 +165,9 @@ void renderScene(void)
 
     glOrtho(-750.0, 750.0, -1300.0, 500.0, -500.0, 500.0); // Changing the coordinate system.
 
-    glPushMatrix();
+    zom_1.drawZombie();
 
-    glRotatef(90,0.0,1.0,0);
-
-    zombieShow();
-    glPopMatrix();
-
+    //zom_2.drawZombie();
 
 
     show2D();
@@ -154,14 +184,16 @@ void initWindow()
 
 
     glutWarpPointer(1280 / 2, 720 / 2);
+    //glutFullScreen();
 
 
     grass = LoadBitmap("image/grass.bmp");
     zombie = LoadBitmap("image/zombie.bmp");
     sky = LoadBitmap("image/sky.bmp");
+    sand = LoadBitmap("image/sand.bmp");
 
 
-    glutIgnoreKeyRepeat(1);
+    //glutIgnoreKeyRepeat(1);
     glutKeyboardFunc(processNormalKeys);
     glutSpecialFunc(pressKey);
     glutSpecialUpFunc(releaseKey);
@@ -184,10 +216,8 @@ int main(int argc, char **argv)
     glutInitWindowPosition(20,20);
     glutInitWindowSize(1280,720);
 
+    glutCreateWindow("The Last Sniper");
 
-    glutCreateWindow("Snowman");
-
-// register all callbacks
     initWindow();
 
     glutMainLoop();

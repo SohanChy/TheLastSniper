@@ -1,3 +1,18 @@
+void mouseClickFunc(int button, int state, int x, int y)
+{
+    // Save the left button state
+    if (button == GLUT_LEFT_BUTTON)
+    {
+        leftMouseButtonDown = (state == GLUT_DOWN);
+    }
+
+    else if (button == GLUT_RIGHT_BUTTON)
+    {
+        // \/ right MouseButton
+        rightMouseButtonDown = (state == GLUT_DOWN);
+    }
+}
+
 void mouseMotion(int x, int y)
 {
     int wh = glutGet(GLUT_WINDOW_HEIGHT);
@@ -8,8 +23,8 @@ void mouseMotion(int x, int y)
     mouse_x = (float) x ;
     mouse_y = (float) y ;
 
-    xAngle = 1.20 * (mouse_x / ww) - 0.6;
-    yAngle = 0.30 * (mouse_y / wh) - 0.15;
+    xAngle = 1.80 * (mouse_x / ww) - 0.9;   //0.6 is X camera freedom
+    yAngle = 0.30 * (mouse_y / wh) - 0.15;   //0.15 is Y camera
     ly = yAngle;
 
   // std::cout<<"x "<<x<<std::endl;
@@ -18,8 +33,15 @@ void mouseMotion(int x, int y)
 
 void processNormalKeys(unsigned char key, int x, int y) {
 
- if (key == 27)
-  exit(0);
+ if (key == 27){
+    exit(0);
+ }
+ else if(key == 98){
+        //b key to experiment
+        //textureTiles = textureTiles + 1;
+
+}
+
 }
 
 void pressKey(int key, int x, int y) {

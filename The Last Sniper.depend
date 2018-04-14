@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1523570102 source:d:\sohan-windows\mydocs\the last sniper\main.cpp
+1523741698 source:d:\sohan-windows\mydocs\the last sniper\main.cpp
 	<iostream>
 	<stdlib.h>
 	<GL/gl.h>
@@ -12,6 +12,9 @@
 	<math.h>
 	<string.h>
 	<windows.h>
+	"helpers.h"
+	"draw.h"
+	"keyboardmouse.h"
 
 983680386 c:\program files (x86)\codeblocks\mingw\include\gl\glut.h
 	<windows.h>
@@ -263,4 +266,10 @@
 
 1341006776 c:\program files (x86)\codeblocks\mingw\include\stdint.h
 	<stddef.h>
+
+1523734049 d:\sohan-windows\mydocs\the last sniper\helpers.h
+
+1523739385 d:\sohan-windows\mydocs\the last sniper\draw.h
+
+1523733246 d:\sohan-windows\mydocs\the last sniper\keyboardmouse.h
 
