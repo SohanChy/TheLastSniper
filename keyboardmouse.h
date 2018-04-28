@@ -37,6 +37,11 @@ void processNormalKeys(unsigned char key, int x, int y) {
     exit(0);
  }
  else if(key == 98){
+     if(zombieMoveSpeed != 0){
+        zombieMoveSpeed = 0;
+     }
+     else zombieMoveSpeed = 7.5f;
+
         //b key to experiment
         //textureTiles = textureTiles + 1;
 

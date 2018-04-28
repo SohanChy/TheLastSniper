@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1523741698 source:d:\sohan-windows\mydocs\the last sniper\main.cpp
+1524830001 source:d:\sohan-windows\mydocs\the last sniper\main.cpp
 	<iostream>
 	<stdlib.h>
 	<GL/gl.h>
@@ -271,5 +271,5 @@
 
 1523739385 d:\sohan-windows\mydocs\the last sniper\draw.h
 
-1523733246 d:\sohan-windows\mydocs\the last sniper\keyboardmouse.h
+1524830002 d:\sohan-windows\mydocs\the last sniper\keyboardmouse.h
 

@@ -52,7 +52,7 @@ int rightLegMove = -1; // If right mouse clicked, right leg will move by 1.
 int leftLegAngle = 90; // If right mouse clicked, this variable will be used to rotate left leg and it initialized to 90 degrees for first position of leg.
 int rightLegAngle = 90; // If right mouse clicked, this variable will be used to rotate right leg and it initialized to 90 degrees for first position of leg.
 float zMove = 0.0; // If right mouse clicked, this variable will be used to change position of object. Object will move on z-axis.
-float zombieMoveSpeed = 5.5f;
+float zombieMoveSpeed = 7.5f;
 
 float mouse_x = 0;
 float mouse_y = 0;
@@ -84,10 +84,11 @@ class Zombie {
 
       void checkIfAlive(){
             int ww = glutGet(GLUT_WINDOW_WIDTH);
-            double mX = (mouse_x / ww);
-            double ownX = (double)((double)(startPosX+zMove) + 23800) / 47600;
+            double mX = (mouse_x) - 1365/2 ;
+            double ownX = (double)((double)(startPosX+zMove)/(17.289 * 2 ) ) + 80;
 
-
+            std::cout<<"M: "<<mX<<std::endl;
+            std::cout<<"O: "<<ownX<<std::endl;
 
           if(leftMouseButtonDown){
 
@@ -96,8 +97,7 @@ class Zombie {
                     mX = (1-mX) + 0.06;
             }
 
-             std::cout<<"M: "<<mX<<std::endl;
-            std::cout<<"O: "<<ownX<<std::endl;
+
 
             if( mX < ownX + 0.01 && mX > ownX - 0.01){
                 alive = false;
@@ -109,7 +109,7 @@ class Zombie {
 };
 
     //23800 is scope reach
-    Zombie zom_1(0,-23800);
+    Zombie zom_1(0,-23600);
    // Zombie zom_2(1,-23800);
 
 
@@ -184,7 +184,7 @@ void initWindow()
 
 
     glutWarpPointer(1280 / 2, 720 / 2);
-    //glutFullScreen();
+    glutFullScreen();
 
 
     grass = LoadBitmap("image/grass.bmp");
