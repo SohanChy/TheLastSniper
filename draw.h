@@ -1,3 +1,20 @@
+using namespace std;
+
+
+void clicky(){
+   GLdouble proj[16];
+  GLdouble model[16];
+  GLint view[4];
+
+  glGetDoublev(GL_MODELVIEW_MATRIX,model);
+  glGetDoublev(GL_PROJECTION_MATRIX,proj);
+  glGetIntegerv(GL_VIEWPORT,view);
+
+//  gluUnProject((GLdouble)mouse_x,(GLdouble)mouse_y,0,model,proj,view,
+	//       &amp;objx,&amp;objy,&amp;objz);
+
+}
+
 void drawCircle(float cx, float cy, float r, int num_segments)
 {
     glBegin(GL_LINE_LOOP);
@@ -13,7 +30,6 @@ void drawCircle(float cx, float cy, float r, int num_segments)
     }
     glEnd();
 }
-
 
 void showCrossHair(int sw, int sh)
 {
@@ -103,6 +119,9 @@ void showCrossHair(int sw, int sh)
 
 }
 
+
+
+
 void show2D()
 {
 
@@ -110,8 +129,15 @@ void show2D()
     int sh = glutGet(GLUT_WINDOW_HEIGHT);
 
     frame++;
-    time=glutGet(GLUT_ELAPSED_TIME);
-    sprintf(s,"S:%d",time/1000);
+    if(pausedTime > 0){
+        time=glutGet(GLUT_ELAPSED_TIME) - (glutGet(GLUT_ELAPSED_TIME) - pausedTime) ;
+    }
+    else {
+        time=glutGet(GLUT_ELAPSED_TIME);
+        pausedTime = 0;
+    }
+
+    sprintf(s,"S:%d",(time - newGameTime)/1000);
 
     glColor3f(0.0f,1.0f,1.0f);
     setOrthographicProjection();
@@ -134,9 +160,9 @@ void show2D()
 
     glPushMatrix();
 
-    renderBitmapString(30,15,(void *)font,"The Last Sniper");
-    renderBitmapString(30,35,(void *)font,s);
-    renderBitmapString(30,55,(void *)font,"Esc - Quit");
+      renderBitmapString(600,30,GLUT_BITMAP_HELVETICA_18,"The Last Sniper");
+    renderBitmapString(1200,30,GLUT_BITMAP_HELVETICA_18,s);
+    renderBitmapString(40,30,GLUT_BITMAP_HELVETICA_18,"Esc - Quit");
 
     glPopMatrix();
 
@@ -150,16 +176,23 @@ void show2D()
 
 }
 
-void zombieShow(float startPosX)
+float zombieShow(float startPosX,float &zMove,float zombieMoveSpeed, int deadTime)
 {
+    if(deadTime != 0){
+         glColor3ub(255,0,0);
+    }
+    else{
+         glColor3ub(179,94,116);
+    }
     glPushMatrix(); //BODY
-    glColor3ub(179,94,116);
+
     glTranslatef(0.0, 221, startPosX+zMove);
     glRotatef(90, 1.0, 0.0, 0.0);
     GLUquadricObj* body = gluNewQuadric();
     gluQuadricDrawStyle(body, GLU_FILL);
     gluCylinder(body, 80, 120, 300, 30, 30);
     glPopMatrix();
+
 
 
 
@@ -268,14 +301,23 @@ void zombieShow(float startPosX)
     glTranslatef(0.0, 350, startPosX+zMove);
     glutSolidSphere(100, 30, 30);
     glPopMatrix();
+
+    return zMove;
+
 }
 
 
 
 void Zombie::drawZombie()
 {
+
+
     checkIfAlive();
     if(!alive){
+        return;
+    }
+
+    if(hide){
         return;
     }
 
@@ -285,12 +327,18 @@ void Zombie::drawZombie()
         goAngle = 90;
     }
 
-    glPushMatrix();
 
+
+
+    glPushMatrix();
     glRotatef(goAngle,0.0,1.0,0);
 
-    zombieShow(startPosX);
+   // glTranslatef(0.0, 221, startPosX+zMove);
+
+    //std::cout<<zMove<<std::endl;
+    zMove = zombieShow(startPosX,zMove,zombieMoveSpeed,deadTime);
     glPopMatrix();
+
 
 
 }
@@ -302,7 +350,7 @@ void drawGround()
 
     // Draw ground
     glMatrixMode(GL_MODELVIEW);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glColor3f(0.9f, 0.9f, 0.9f);
 
     glBindTexture ( GL_TEXTURE_2D, sand);
@@ -329,31 +377,29 @@ void drawGround()
     glEnd();
 
 
-
-
     //X is RED
     //Y IS PINK
     //Z is BLUE
 
-
-    glBegin(GL_LINES);
-    //X-Axis
-    glColor3ub(255,0,0);
-    glVertex3f(1,2,0);
-    glVertex3f(2,2,0);
-
-    //Z-Axis
-    glColor3ub(0,0,255);
-    glVertex3f(1,2,0);
-    glVertex3f(1,2,1);
-
-    //Y-Axis
-
-    glColor3ub(255,0,255);
-    glVertex3f(1,2,0);
-    glVertex3f(1,3,0);
-
-    glEnd();
+//
+//    glBegin(GL_LINES);
+//    //X-Axis
+//    glColor3ub(255,0,0);
+//    glVertex3f(1,2,0);
+//    glVertex3f(2,2,0);
+//
+//    //Z-Axis
+//    glColor3ub(0,0,255);
+//    glVertex3f(1,2,0);
+//    glVertex3f(1,2,1);
+//
+//    //Y-Axis
+//
+//    glColor3ub(255,0,255);
+//    glVertex3f(1,2,0);
+//    glVertex3f(1,3,0);
+//
+//    glEnd();
 
 
     /*
@@ -450,6 +496,55 @@ void drawGround()
 
     glEnd();
 
+
+}
+
+void tower(double x,double y,double z,int height)//x means front-back,y means up-down,z means left-right
+{
+     glColor3ub(0, 0, 0);
+        //cout<<"inside tower"<<endl;
+        ////////sticks//////////
+        glPushMatrix(); //back left
+        glTranslatef(x+50,y,z+50);
+        glRotatef(270, 1.0, 0.0, 0.0);
+        GLUquadricObj* stick = gluNewQuadric();
+        gluQuadricDrawStyle(stick, GLU_FILL);
+        gluCylinder(stick, 80, 30, height, 30, 30);
+        glPopMatrix();
+
+        glPushMatrix(); //back right
+        glTranslatef(x+50,y,z+950);
+        glRotatef(270, 1.0, 0.0, 0.0);
+        GLUquadricObj* stick1 = gluNewQuadric();
+        gluQuadricDrawStyle(stick1, GLU_FILL);
+        gluCylinder(stick1, 80, 30, height, 30, 30);
+        glPopMatrix();
+
+
+        glPushMatrix(); //front left
+        glTranslatef(x+950,y,z+50);
+        glRotatef(270, 1.0, 0.0, 0.0);
+        GLUquadricObj* stick2 = gluNewQuadric();
+        gluQuadricDrawStyle(stick2, GLU_FILL);
+        gluCylinder(stick2, 80, 30, height, 30, 30);
+        glPopMatrix();
+
+
+        glPushMatrix(); //front right
+        glTranslatef(x+950,y,z+950);
+        glRotatef(270, 1.0, 0.0, 0.0);
+        GLUquadricObj* stick3 = gluNewQuadric();
+        gluQuadricDrawStyle(stick3, GLU_FILL);
+        gluCylinder(stick3, 80, 30, height, 30, 30);
+        glPopMatrix();
+
+
+        ////////box/////////
+        glPushMatrix(); //
+        glColor3ub(64, 132, 108);
+        glTranslatef(x+500,y+2000,z+500);
+        glutSolidCube(1000);
+        glPopMatrix();
 
 }
 

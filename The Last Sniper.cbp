@@ -46,6 +46,8 @@
 		<Unit filename="helpers.h" />
 		<Unit filename="keyboardmouse.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="objlocs.h" />
+		<Unit filename="scenes.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

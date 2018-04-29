@@ -142,7 +142,7 @@ void changeSize(int w1, int h1)
 void initScene() {
 
  glEnable(GL_DEPTH_TEST);
- snowman_display_list = createDL();
+
 
 }
 

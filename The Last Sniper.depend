@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1524830001 source:d:\sohan-windows\mydocs\the last sniper\main.cpp
+1523741698 source:d:\sohan-windows\mydocs\the last sniper\main.cpp
 	<iostream>
 	<stdlib.h>
 	<GL/gl.h>
@@ -271,5 +271,104 @@
 
 1523739385 d:\sohan-windows\mydocs\the last sniper\draw.h
 
-1524830002 d:\sohan-windows\mydocs\the last sniper\keyboardmouse.h
+1523733246 d:\sohan-windows\mydocs\the last sniper\keyboardmouse.h
+
+1524937474 source:e:\9th semester\graphics\glut for codeblocks\thelastsniper-master\main.cpp
+	<iostream>
+	<stdlib.h>
+	<GL/gl.h>
+	<GL/glut.h>
+	<math.h>
+	<fstream>
+	<stdio.h>
+	<stdint.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<string>
+	<windows.h>
+	<sstream>
+	"helpers.h"
+	"draw.h"
+	"keyboardmouse.h"
+
+1524936995 e:\9th semester\graphics\glut for codeblocks\thelastsniper-master\helpers.h
+
+1524937296 e:\9th semester\graphics\glut for codeblocks\thelastsniper-master\draw.h
+
+1524931976 e:\9th semester\graphics\glut for codeblocks\thelastsniper-master\keyboardmouse.h
+
+1525004473 source:d:\sohan-windows\mydocs\glutproject\thelastsniper\main.cpp
+	<iostream>
+	<stdlib.h>
+	<GL/gl.h>
+	<GL/glut.h>
+	<math.h>
+	<fstream>
+	<stdio.h>
+	<stdint.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<string>
+	<windows.h>
+	<windows.h>
+	<sstream>
+	"helpers.h"
+	"scenes.h"
+	"draw.h"
+	"keyboardmouse.h"
+
+1524982395 d:\sohan-windows\mydocs\glutproject\thelastsniper\helpers.h
+
+1525004447 d:\sohan-windows\mydocs\glutproject\thelastsniper\draw.h
+
+1525004885 d:\sohan-windows\mydocs\glutproject\thelastsniper\keyboardmouse.h
+
+1525001042 d:\sohan-windows\mydocs\glutproject\thelastsniper\objlocs.h
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<algorithm>
+
+1525003593 d:\sohan-windows\mydocs\glutproject\thelastsniper\scenes.h
+	"objlocs.h"
+
+1525004474 source:d:\sohan-windows\mydocs\graphics\thelastsniper_final\thelastsniper\main.cpp
+	<iostream>
+	<stdlib.h>
+	<GL/gl.h>
+	<GL/glut.h>
+	<math.h>
+	<fstream>
+	<stdio.h>
+	<stdint.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<string>
+	<windows.h>
+	<windows.h>
+	<sstream>
+	"helpers.h"
+	"scenes.h"
+	"draw.h"
+	"keyboardmouse.h"
+
+1524982396 d:\sohan-windows\mydocs\graphics\thelastsniper_final\thelastsniper\helpers.h
+
+1525003594 d:\sohan-windows\mydocs\graphics\thelastsniper_final\thelastsniper\scenes.h
+	"objlocs.h"
+
+1525001044 d:\sohan-windows\mydocs\graphics\thelastsniper_final\thelastsniper\objlocs.h
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<algorithm>
+
+1525005694 d:\sohan-windows\mydocs\graphics\thelastsniper_final\thelastsniper\draw.h
+
+1525004886 d:\sohan-windows\mydocs\graphics\thelastsniper_final\thelastsniper\keyboardmouse.h
 
